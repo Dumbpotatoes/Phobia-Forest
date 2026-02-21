@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forêt de phobie</title>
+
+    <style>
+        body{
+            background-image: url(Img-Creepy_Forest.jpg); /*Image d'arriere plan*/
+            background-size: cover; /*Couvre la page*/
+            background-repeat: no-repeat; /*pas repeter*/
+            background-color: black;
+        }
+        #playButton{
+            height: 100px;
+            width: 200px;
+            line-height: 100px;
+            text-align: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 50px;
+            padding: 5px; /*distance mot et bordure*/
+            background-color: ghostwhite;
+            position: absolute; /*position selon directions et n'affecte pas autres elements*/
+            top: 300px;
+            left: 850px;
+        }
+        #playButton:hover{ /*Quand curseur dessus ppts differents*/
+            height: 110px;
+            width: 210px;
+            text-align: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            line-height: 110px;
+            font-size: 50px;
+            padding: 5px;
+            background-color: black;
+            color: rgb(224, 0, 0);
+            top: 295px;
+            left: 845px;
+        }
+        #scarySelector{
+            height: 75px;
+            width: 150px;
+            text-align: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 40px;
+            line-height: 70px; /*Hauteur du texte dans mot*/
+            padding: 5px;
+            background-color: rgb(156, 156, 156);
+            color: rgb(255, 80, 109);
+            position: absolute;
+            top: 410px;
+            left: 870px;
+        }
+        #lessScaryButton{
+            height: 50px;
+            width: 50px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 50px;
+            background-color: ghostwhite;
+            position: absolute;
+            top: 500px;
+            left: 900px;
+        }
+        #moreScaryButton{
+            height: 50px;
+            width: 50px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 50px;
+            background-color: black;
+            color: red;
+            position: absolute;
+            top: 500px;
+            left: 950px;
+        }
+        #word1{
+            height: 50px;
+            width: 100px;
+            border-radius: 10px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: ghostwhite;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            line-height: 50px;
+            color: black;
+        }
+        #word2{
+            height: 50px;
+            width: 100px;
+            border-radius: 10px;
+            position: absolute;
+            top: 0px;
+            left: 400px;
+            background-color: ghostwhite;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            line-height: 50px;
+            color: black;
+        }
+        #word3{
+            height: 50px;
+            width: 100px;
+            border-radius: 10px;
+            position: absolute;
+            top: 0px;
+            left: 600px;
+            background-color: ghostwhite;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            line-height: 50px;
+            color: black;
+        }
+        #word4{
+            height: 50px;
+            width: 100px;
+            border-radius: 10px;
+            position: absolute;
+            top: 0px;
+            left: 800px;
+            background-color: ghostwhite;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            line-height: 50px;
+            color: black;
+        }
+        #answer{
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 80px;
+            text-align: center;
+            margin: auto;
+            margin-top: 700px;
+            color: rgb(226, 24, 24);
+        }
+        #livesCount{
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 40px;
+            position: absolute;
+            bottom: 40px;
+            right: 10px;
+            color: ghostwhite;
+        }
+        #scoreCount{
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 40px;
+            position: absolute;
+            bottom: 3px;
+            right: 10px;
+            color: ghostwhite;
+        }
+        #poop{
+            width: 700px;
+            height: 700px;
+            background-image: url(Img-Poop.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 100px;
+            left: 700px;
+        }
+        #gameoverMessage{
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 80px;
+            position: absolute;
+            top: 560px;
+            left: 840px;
+            background-color: black;
+            color: red;
+        }
+        .hide{ /*class, si element l'a n'est plus visible*/
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <button id="playButton" onclick="play()">Jouer</button> 
+    <div id="scarySelector">Peur</div>
+    <button id="lessScaryButton" onclick="lessScary()">-</button>
+    <button id="moreScaryButton" onclick="moreScary()">+</button>
+    <div id="gameoverMessage" class="hide">GAMEOVER!</div>
+    <div id="poop" class="hide"></div>
+    <div id="word1" class="hide">ecrit</div>
+    <div id="word2" class="hide"></div>
+    <div id="word3" class="hide"></div>
+    <div id="word4" class="hide"></div>
+    <div id="answer" class="hide"></div>
+    <div id="livesCount" class="hide">Vies: 10</div>
+    <div id="scoreCount" class="hide">Points: 0</div>
+    <script>
+        var phobiaList = ["huh","entomophobie","hippopotomonstrosesquippedaliophobie","achluophobie","tachophobie","coulrophobie","laxophobie","ornithophobie","hylophobie"] /*liste d'element*/
+        var lives = 10
+        var livesCount = document.getElementById("livesCount") /*attache id a variable*/
+        var score = 0
+        var difficulty = 0
+        var scary = 2
+        var activeGame = ""
+        var activeGlobal = ""
+        var activeTimer = ""
+        var globalTimer = 0
+
+        var answer = document.getElementById("answer")
+
+        var word1 = document.getElementById("word1") //avis: code generealement dupliquer 4 fois pour les quatres boites de mots
+        var change1 = false
+        var word1Height = 0
+        var word1Left = 0
+        var speed1 = 1
+        var flightSpeed1 = 20
+        var flyRange1 = 0
+        var movement1 = "normal"
+        var effect1 = "none"
+        var help1 = "none"
+        var triggerEffect1 = false
+        var triggerHelp1 = false
+
+        var word2 = document.getElementById("word2")
+        var change2 = false
+        var word2Height = 0
+        var word2Left = 0
+        var speed2 = 1
+        var flightSpeed2 = 20
+        var flyRange2 = 0
+        var movement2 = "normal"
+        var effect2 = "none"
+        var help2 = "none"
+        var triggerEffect2 = false
+        var triggerHelp2 = false
+
+        var word3 = document.getElementById("word3")
+        var change3 = false
+        var word3Height = 0
+        var word3Left = 0
+        var speed3 = 1
+        var flightSpeed3 = 20
+        var flyRange3 = 0
+        var movement3 = "normal"
+        var effect3 = "none"
+        var help3 = "none"
+        var triggerEffect3 = false
+        var triggerHelp3 = false
+
+        var word4 = document.getElementById("word4")
+        var change4 = false
+        var word4Height = 0
+        var word4Left = 0
+        var speed4 = 1
+        var flightSpeed4 = 20
+        var flyRange4 = 0
+        var movement4 = "normal"
+        var effect4 = "none"
+        var help4 = "none"
+        var triggerEffect4 = false
+        var triggerHelp4 = false
+
+        var globalEffect = "none"
+        var globalActive = false
+        var speedSlow = 0
+
+        var failSound = new Audio() //assigne une variable a un audio
+        failSound.src = "sfx-Wrong.mp3"
+        var succesSound = new Audio()
+        succesSound.src = "sfx-Correct.mp3"
+        var gameoverSound = new Audio()
+        gameoverSound.src = "sfx-Gameover.mp3"
+        var enterSound = new Audio()
+        enterSound.src = "sfx-Enter.mp3"
+
+        var bugsSound = new Audio()
+        bugsSound.src = "sfx-Bugs.mp3"
+        var lightsOutSound = new Audio()
+        lightsOutSound.src = "sfx-Lights_Out.mp3"
+        var diarrheaSound = new Audio()
+        diarrheaSound.src = "sfx-Fart.mp3"
+        var clownLaughAudio = new Audio()
+        clownLaughAudio.src = "sfx-Clown_Laugh.mp3"
+
+        function lessScary(){ //diminu "scary" change certaines images pour qu'ils soivent moins horrifique
+            if(scary>1){
+                scary-=1
+            }
+            if(scary==1){
+                document.getElementById("scarySelector").style.backgroundColor = "white" //change ppt style du scary selector
+                document.getElementById("scarySelector").style.color = "pink" 
+                document.getElementById("scarySelector").textContent = "Mignon"
+            }
+            if(scary==2){
+                document.getElementById("scarySelector").style.backgroundColor = "rgb(156, 156, 156)"
+                document.getElementById("scarySelector").style.color = "rgb(255, 80, 109)" 
+                document.getElementById("scarySelector").textContent = "Peur"
+            }
+        }
+        function moreScary(){  //augment "scary" change certaines images pour qu'ils soivent plus horrifique
+            if(scary<3){
+                scary += 1
+            }
+            if(scary==2){
+                document.getElementById("scarySelector").style.backgroundColor = "rgb(156, 156, 156)"
+                document.getElementById("scarySelector").style.color = "rgb(255, 80, 109)" 
+                document.getElementById("scarySelector").textContent = "Peur"
+            }
+            if(scary==3){
+                document.getElementById("scarySelector").style.backgroundColor = "black"
+                document.getElementById("scarySelector").style.color = "red" 
+                document.getElementById("scarySelector").textContent = "Horreur"
+            }
+        }
+        function play(){
+            activeGame = setInterval(wordDrop,100) //commence les boucles
+            activeGlobal = setInterval(manageGlobalEffect,100)
+            activeTimer = setInterval(timer,1000)
+            playButton.classList.add("hide") //cache et montre certains elements
+            scarySelector.classList.add("hide")
+            lessScaryButton.classList.add("hide")
+            moreScaryButton.classList.add("hide")
+            word1.classList.remove("hide")
+            livesCount.classList.remove("hide")
+            answer.classList.remove("hide")
+            scoreCount.classList.remove("hide")
+        }
+        function wordChange(){ //changement de mot quand reussit ou rater
+            if(change1 == true){ //si changement est pour mot 1
+                change1 = false //signifie changement fait et plus d'autre
+                word1Height = 0
+                word1.style.top = word1Height + "px" //met la distance vers le haut selon la variable
+                flyRange1 = Math.ceil(Math.random()*1550) // choisi position horizontale aleatoire que le word va aller a
+                word1Left = flyRange1
+                word1.style.left = flyRange1 + "px"
+                word1.innerHTML = phobiaList[Math.ceil(Math.random()*(phobiaList.length-1))] //choisi un element aleatoire de la liste pour etre le mot, -1 car liste commence compte à 0
+                movement1 = "normal" //remet a 0 les caracteristique du mot
+                help1 = "none"
+                effect1 ="none"
+                speed1 = 2
+                flightSpeed1 = 20
+                if(word1.innerHTML == "hippopotomonstrosesquippedaliophobie"){ //si il est un mot specifique il obtiennent certains ppts
+                    help1 = "regen1"
+                    speed1 = 1
+                    word1.style.width = 400 + "px"
+                }
+                if(word1.innerHTML == "entomophobie"){
+                    effect1 = "bug"
+                    word1.style.width = 130 + "px"
+                }
+                if(word1.innerHTML == "achluophobie"){
+                    effect1 = "darkness"
+                    word1.style.width = 120 + "px"
+                }
+                if(word1.innerHTML == "tachophobie"){
+                    speed1 = 50
+                    movement1 = "lines"
+                    help1 = "slow"
+                    word1.style.width = 120 + "px"
+                }
+                if(word1.innerHTML == "ornithophobie"){
+                    speed1 = 3
+                    movement1 = "fly"
+                    help1 = "birds"
+                    word1.style.width = 150 + "px"
+                }
+                if(word1.innerHTML == "coulrophobie"){
+                    effect1 = "clown"
+                    word1.style.width = 120 + "px"
+                }
+                if(word1.innerHTML == "laxophobie"){
+                    effect1 = "diarrhea"
+                    word1.style.width = 100 + "px"
+                }
+                if(word1.innerHTML == "hylophobie"){
+                    word1.style.width = 100 + "px"
+                }
+            }
+            if(change2 == true){
+                change2 = false
+                word2Height = 0
+                word2.style.top = word2Height + "px"
+                flyRange2 = Math.ceil(Math.random()*1550)
+                word2Left = flyRange2
+                word2.style.left = flyRange2 + "px"
+                word2.innerHTML = phobiaList[Math.ceil(Math.random()*(phobiaList.length-1))] 
+                movement2 = "normal"
+                help2 = "none"
+                effect2 ="none"
+                speed2 = 2
+                flightSpeed2 = 20
+                if(word2.innerHTML == "hippopotomonstrosesquippedaliophobie"){
+                    help2 = "regen1"
+                    speed2 = 1
+                    word2.style.width = 400 + "px"
+                }
+                if(word2.innerHTML == "entomophobie"){
+                    effect2 = "bug"
+                    word2.style.width = 130 + "px"
+                }
+                if(word2.innerHTML == "achluophobie"){
+                    effect2 = "darkness"
+                    word2.style.width = 120 + "px"
+                }
+                if(word2.innerHTML == "tachophobie"){
+                    speed2 = 50
+                    movement2 = "lines"
+                    help2 = "slow"
+                    word2.style.width = 120 + "px"
+                }
+                if(word2.innerHTML == "ornithophobie"){
+                    speed2 = 3
+                    movement2 = "fly"
+                    help2 = "birds"
+                    word2.style.width = 150 + "px"
+                }
+                if(word2.innerHTML == "coulrophobie"){
+                    effect2 = "clown"
+                    word2.style.width = 120 + "px"
+                }
+                if(word2.innerHTML == "laxophobie"){
+                    effect2 = "diarrhea"
+                    word2.style.width = 100 + "px"
+                }
+                if(word2.innerHTML == "hylophobie"){
+                    word2.style.width = 100 + "px"
+                }
+            }
+            if(change3 == true){
+                change3 = false
+                word3Height = 0
+                word3.style.top = word3Height + "px"
+                flyRange3 = Math.ceil(Math.random()*1550)
+                word3Left = flyRange3
+                word3.style.left = flyRange3 + "px"
+                word3.innerHTML = phobiaList[Math.ceil(Math.random()*(phobiaList.length-1))] 
+                movement3 = "normal"
+                help3 = "none"
+                effect3 ="none"
+                speed3 = 2
+                flightSpeed3 = 20
+                if(word3.innerHTML == "hippopotomonstrosesquippedaliophobie"){
+                    help3 = "regen1"
+                    speed3 = 1
+                    word3.style.width = 400 + "px"
+                }
+                if(word3.innerHTML == "entomophobie"){
+                    effect3 = "bug"
+                    word3.style.width = 130 + "px"
+                }
+                if(word3.innerHTML == "achluophobie"){
+                    effect3 = "darkness"
+                    word3.style.width = 120 + "px"
+                }
+                if(word3.innerHTML == "tachophobie"){
+                    speed3 = 50
+                    movement3 = "lines"
+                    help3 = "slow"
+                    word3.style.width = 120 + "px"
+                }
+                if(word3.innerHTML == "ornithophobie"){
+                    speed3 = 3
+                    movement3 = "fly"
+                    help3 = "birds"
+                    word3.style.width = 150 + "px"
+                }
+                if(word3.innerHTML == "coulrophobie"){
+                    effect3 = "clown"
+                    word3.style.width = 120 + "px"
+                }
+                if(word3.innerHTML == "laxophobie"){
+                    effect3 = "diarrhea"
+                    word3.style.width = 100 + "px"
+                }
+                if(word3.innerHTML == "hylophobie"){
+                    word3.style.width = 100 + "px"
+                }
+            }
+            if(change4 == true){
+                change4 = false
+                word4Height = 0
+                word4.style.top = word4Height + "px"
+                flyRange4 = Math.ceil(Math.random()*1550)
+                word4Left = flyRange4
+                word4.style.left = flyRange4 + "px"
+                word4.innerHTML = phobiaList[Math.ceil(Math.random()*(phobiaList.length-1))] 
+                movement4 = "normal"
+                help4 = "none"
+                effect4 ="none"
+                speed4 = 2
+                flightSpeed4 = 20
+                if(word4.innerHTML == "hippopotomonstrosesquippedaliophobie"){
+                    help4 = "regen1"
+                    speed4 = 1
+                    word4.style.width = 400 + "px"
+                }
+                if(word4.innerHTML == "entomophobie"){
+                    effect4 = "bug"
+                    word4.style.width = 130 + "px"
+                }
+                if(word4.innerHTML == "achluophobie"){
+                    effect4 = "darkness"
+                    word4.style.width = 120 + "px"
+                }
+                if(word4.innerHTML == "tachophobie"){
+                    speed4 = 50
+                    movement4 = "lines"
+                    help4 = "slow"
+                    word4.style.width = 120 + "px"
+                }
+                if(word4.innerHTML == "ornithophobie"){
+                    speed4 = 3
+                    movement4 = "fly"
+                    help4 = "birds"
+                    word4.style.width = 150 + "px"
+                }
+                if(word4.innerHTML == "coulrophobie"){
+                    effect4 = "clown"
+                    word4.style.width = 120 + "px"
+                }
+                if(word4.innerHTML == "laxophobie"){
+                    effect4 = "diarrhea"
+                    word4.style.width = 100 + "px"
+                }
+                if(word4.innerHTML == "hylophobie"){
+                    word4.style.width = 100 + "px"
+                }
+            }
+        }
+        function triggerEffect(){ //declenche effet
+            if(triggerHelp1 == true){ //determine que c'est l'effet aidant du mot 1
+                triggerHelp1 = false
+                if(help1 == "regen1"){
+                    if(lives < 10){ //si em bas de 10 (le max) ajoute vie
+                        lives++
+                        livesCount.textContent = "Vies : " + lives //change le text pour correspondre au nouveau compte
+                    }
+                }
+                if(help1 == "slow"){
+                    speedSlow = 5 //speedSlow est soutrait de la vitesse ce qui ralentit ou ,quand c'est negatif, repousse les mots vers le haut
+                    setTimeout(()=>{speedSlow = 0},5000) //remet a 0 apres 5 seconds
+                }
+                if(help1 == "birds"){
+                    movement2 = "fly" //cause tous les auters mots a bouger en volant
+                    movement3 = "fly"    //tachophobie avec fly est trop vite >:)
+                    movement4 = "fly"
+                }
+            }
+            if(triggerEffect1 == true){
+                triggerEffect1 = false
+                if(effect1 == "bug"){
+                    globalEffect = "bug" //active effet global
+                }
+                if(effect1 == "darkness"){
+                    globalEffect = "darkness"
+                }
+                if(effect1 == "diarrhea"){
+                    diarrheaSound.play() //joue son de la variable
+                    if(scary == 1){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Cute_Poop.png)" //selon niveau de "scary" montre une image differente
+                    }
+                    if(scary == 2){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Poop.png)"
+                    }
+                    if(scary == 3){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Disgusting_Poop.png)"
+                    }
+                    poop.classList.remove("hide")
+                    setTimeout(()=>{poop.classList.add("hide")},2000) //recache l'image apres certain temps
+                }
+                if(effect1 == "clown"){
+                    clownLaughAudio.play()
+                    setTimeout(()=>{
+                        if(scary == 1){
+                            document.body.style.backgroundImage = "url(Img-Friendly_Clown.jpg)";
+                        }
+                        if(scary == 2){
+                            document.body.style.backgroundImage = "url(Img-Clown.jpg)";
+                        }
+                        if(scary == 3){
+                            document.body.style.backgroundImage = "url(Img-Creepy_Clown.jpg)";
+                        }
+                    },2000)
+                }
+            }
+            if(triggerHelp2 == true){
+                triggerHelp2 = false
+                if(help2 == "regen1"){
+                    if(lives < 10){
+                        lives++
+                        livesCount.textContent = "Vies : " + lives
+                    }
+                }
+                if(help2 == "slow"){
+                    speedSlow = 5
+                    setTimeout(()=>{speedSlow = 0},5000)
+                }
+                if(help2 == "birds"){
+                    movement1 = "fly"
+                    movement3 = "fly"
+                    movement4 = "fly"
+                }
+            }
+            if(triggerEffect2 == true){
+                triggerEffect2 = false
+                if(effect2 == "bug"){
+                    globalEffect = "bug"
+                }
+                if(effect2 == "darkness"){
+                    globalEffect = "darkness"
+                }
+                if(effect2 == "diarrhea"){
+                    diarrheaSound.play()
+                    if(scary == 1){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Cute_Poop.png)"
+                    }
+                    if(scary == 2){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Poop.png)"
+                    }
+                    if(scary == 3){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Disgusting_Poop.png)"
+                    }
+                    poop.classList.remove("hide")
+                    setTimeout(()=>{poop.classList.add("hide")},2000)
+                }
+                if(effect2 == "clown"){
+                    clownLaughAudio.play()
+                    setTimeout(()=>{
+                        if(scary == 1){
+                            document.body.style.backgroundImage = "url(Img-Friendly_Clown.jpg)";
+                        }
+                        if(scary == 2){
+                            document.body.style.backgroundImage = "url(Img-Clown.jpg)";
+                        }
+                        if(scary == 3){
+                            document.body.style.backgroundImage = "url(Img-Creepy_Clown.jpg)";
+                        }
+                    },2000)
+                }
+            }
+            if(triggerHelp3 == true){
+                triggerHelp3 = false
+                if(help3 == "regen1"){
+                    if(lives < 10){
+                        lives++
+                        livesCount.textContent = "Vies : " + lives
+                    }
+                }
+                if(help3 == "slow"){
+                    speedSlow = 5
+                    setTimeout(()=>{speedSlow = 0},5000)
+                }
+                if(help3 == "birds"){
+                    movement1 = "fly"
+                    movement2 = "fly"
+                    movement4 = "fly"
+                }
+            }
+            if(triggerEffect3 == true){
+                triggerEffect3 = false
+                if(effect3 == "bug"){
+                    globalEffect = "bug"
+                }
+                if(effect3 == "darkness"){
+                    globalEffect = "darkness"
+                }
+                if(effect3 == "diarrhea"){
+                    diarrheaSound.play()
+                    if(scary == 1){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Cute_Poop.png)"
+                    }
+                    if(scary == 2){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Poop.png)"
+                    }
+                    if(scary == 3){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Disgusting_Poop.png)"
+                    }
+                    poop.classList.remove("hide")
+                    setTimeout(()=>{poop.classList.add("hide")},2000)
+                }
+                if(effect3 == "clown"){
+                    clownLaughAudio.play()
+                    setTimeout(()=>{
+                        if(scary == 1){
+                            document.body.style.backgroundImage = "url(Img-Friendly_Clown.jpg)";
+                        }
+                        if(scary == 2){
+                            document.body.style.backgroundImage = "url(Img-Clown.jpg)";
+                        }
+                        if(scary == 3){
+                            document.body.style.backgroundImage = "url(Img-Creepy_Clown.jpg)";
+                        }
+                    },2000)
+                }
+            }
+            if(triggerHelp4 == true){
+                triggerHelp4 = false
+                if(help4 == "regen1"){
+                    if(lives < 10){
+                        lives++
+                        livesCount.textContent = "Vies : " + lives
+                    }
+                }
+                if(help4 == "slow"){
+                    speedSlow = 5
+                    setTimeout(()=>{speedSlow = 0},5000)
+                }
+                if(help4 == "birds"){
+                    movement1 = "fly"
+                    movement2 = "fly"
+                    movement3 = "fly"
+                }
+            }
+            if(triggerEffect4 == true){
+                triggerEffect4 = false
+                if(effect4 == "bug"){
+                    globalEffect = "bug"
+                }
+                if(effect4 == "darkness"){
+                    globalEffect = "darkness"
+                }
+                if(effect4 == "diarrhea"){
+                    diarrheaSound.play()
+                    if(scary == 1){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Cute_Poop.png)"
+                    }
+                    if(scary == 2){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Poop.png)"
+                    }
+                    if(scary == 3){
+                        document.getElementById("poop").style.backgroundImage = "url(Img-Disgusting_Poop.png)"
+                    }
+                    poop.classList.remove("hide")
+                    setTimeout(()=>{poop.classList.add("hide")},2000)
+                }
+                if(effect4 == "clown"){
+                    clownLaughAudio.play()
+                    setTimeout(()=>{
+                        if(scary == 1){
+                            document.body.style.backgroundImage = "url(Img-Friendly_Clown.jpg)";
+                        }
+                        if(scary == 2){
+                            document.body.style.backgroundImage = "url(Img-Clown.jpg)";
+                        }
+                        if(scary == 3){
+                            document.body.style.backgroundImage = "url(Img-Creepy_Clown.jpg)";
+                        }
+                    },2000)
+                }
+            }
+            wordChange() //change le mot a la fin des effets pour pas que ca active l'effet du prochain mot si c'est en meme temps
+        }
+        function manageGlobalEffect(){ //C,est un setInterval donc toujours verifie sur un glabaleffet et activer par un effet
+            if(globalEffect == "bug"){ //si un en specifique il va l'activer
+                bugsSound.play()
+                globalTimer = 5 //remet le timer pour que l'effet dure 5 secondes, meme si un effet globale avant aurait pu se passer
+                globalEffect = "none" //arrete de repeter la commande
+                if(scary == 1){
+                    document.body.style.backgroundImage = "url(Img-Butterflies.png)"; 
+                }
+                if(scary == 2){
+                    document.body.style.backgroundImage = "url(Img-Bugs.jpg)";
+                }
+                if(scary == 3){
+                    document.body.style.backgroundImage = "url(Img-Disgusting_Bugs.jpg)";
+                }
+            }
+            if(globalEffect == "darkness"){ //noirci tout
+                globalTimer = 5
+                globalEffect = "none"
+                lightsOutSound.play()
+                document.body.style.backgroundImage = "none"; //enleve l'arrier plan pour reveler la couleur noir de l'arrier plan
+                word1.style.backgroundColor = "black" //change couleur arrier et texte des mots
+                word1.style.color = "midnightblue"
+                word2.style.backgroundColor = "black"
+                word2.style.color = "midnightblue"
+                word3.style.backgroundColor = "black"
+                word3.style.color = "midnightblue"
+                word4.style.backgroundColor = "black"
+                word4.style.color = "midnightblue"
+            }
+        }
+        function timer(){ //toujours compte vers 0 pour retourner les effets globaux a normal
+            globalTimer--
+            if(globalTimer <= 0){ //si 0 retourne tout le visuel a normal (de bug et darkness)
+                document.body.style.backgroundImage = "url(Img-Creepy_Forest.jpg)";
+                word1.style.backgroundColor = "ghostwhite"
+                word1.style.color = "black"
+                word2.style.backgroundColor = "ghostwhite"
+                word2.style.color = "black"
+                word3.style.backgroundColor = "ghostwhite"
+                word3.style.color = "black"
+                word4.style.backgroundColor = "ghostwhite"
+                word4.style.color = "black"
+            }
+        }
+        function wordDrop(){
+            if(movement1 == "normal"){
+                word1Height += (speed1 + difficulty - speedSlow) //augmente distance du haut de mot selon vitesse, difficulte l'accelere un peu graduellement, et si slow et activer ralentit ou repouse
+                word1.style.top = word1Height + "px"
+            }
+            if(movement1 == "lines"){ //si mouvement et les lignes
+                word1Left += (speed1 + difficulty - speedSlow) //bouge a droite selon meme formule de vitesse
+                word1.style.left = word1Left + "px"
+                if(word1Left>1900){ //quand atteint la fin de l'ecran retourne a gauche, mais un peu plus bas
+                    word1Left = 0
+                    word1.style.left = word1Left + "px"
+                    word1Height += 200 
+                    word1.style.top = word1Height + "px"
+                }
+            }
+            if(movement1 == "fly"){ //si mouvement et voler
+                word1Height += (speed1 + difficulty - speedSlow) //descent
+                word1.style.top = word1Height + "px"
+                word1Left += flightSpeed1 //bouge vers droite/gauche selon vitesse de vole
+                word1.style.left = word1Left + "px"
+                if(word1Left>flyRange1 + 100 || word1Left<flyRange1 - 100){ //section determiner par postion selectionner tant tot qu s'il depasse va vers l'autre direction
+                    flightSpeed1=-flightSpeed1 //inverse le symbole de la vitesse donc va aller vers l'autre direction
+                }
+            }
+            if(word1Height>880){ //si en bas cause activation effet et fail
+                change1 = true //puisque la fonction triggerEffect, wordDrop et wordChange fait fonctionner toutes let mots j'utilise des identifiant individuel donce mot1 mot2 mot3 pour dire quel mot doit passer par la fonctionner pour pas activer pour tous les mots
+                fail()
+                triggerEffect1 = true
+                triggerEffect()
+            }
+            if(movement2 == "normal"){
+                word2Height += (speed2 + difficulty - speedSlow)
+                word2.style.top = word2Height + "px"
+            }
+            if(movement2 == "lines"){
+                word2Left += (speed2 + difficulty - speedSlow)
+                word2.style.left = word2Left + "px"
+                if(word2Left>1900){
+                    word2Left = 0
+                    word2.style.left = word2Left + "px"
+                    word2Height += 200 
+                    word2.style.top = word2Height + "px"
+                }
+            }
+            if(movement2 == "fly"){
+                word2Height += (speed2 + difficulty - speedSlow)
+                word2.style.top = word2Height + "px"
+                word2Left += flightSpeed2
+                word2.style.left = word2Left + "px"
+                if(word2Left>flyRange2 + 100 || word2Left<flyRange2 - 100){
+                    flightSpeed2=-flightSpeed2
+                }
+            }
+            if(word2Height>880){
+                change2 = true 
+                fail()
+                triggerEffect2 = true
+                triggerEffect()
+            }
+            if(movement3 == "normal"){
+                word3Height += (speed3 + difficulty - speedSlow)
+                word3.style.top = word3Height + "px"
+            }
+            if(movement3 == "lines"){
+                word3Left += (speed3 + difficulty - speedSlow)
+                word3.style.left = word3Left + "px"
+                if(word3Left>1900){
+                    word3Left = 0
+                    word3.style.left = word3Left + "px"
+                    word3Height += 200 
+                    word3.style.top = word3Height + "px"
+                }
+            }
+            if(movement3 == "fly"){
+                word3Height += (speed3 + difficulty - speedSlow)
+                word3.style.top = word3Height + "px"
+                word3Left += flightSpeed3
+                word3.style.left = word3Left + "px"
+                if(word3Left>flyRange3 + 100 || word3Left<flyRange3 - 100){
+                    flightSpeed3=-flightSpeed3
+                }
+            }
+            if(word3Height>880){
+                change3 = true 
+                fail()
+                triggerEffect3 = true
+                triggerEffect()
+            }
+            if(movement4 == "normal"){
+                word4Height += (speed4 + difficulty - speedSlow)
+                word4.style.top = word4Height + "px"
+            }
+            if(movement4 == "lines"){
+                word4Left += (speed4 + difficulty - speedSlow)
+                word4.style.left = word4Left + "px"
+                if(word4Left>1900){
+                    word4Left = 0
+                    word4.style.left = word4Left + "px"
+                    word4Height += 200 
+                    word4.style.top = word4Height + "px"
+                }
+            }
+            if(movement4 == "fly"){
+                word4Height += (speed4 + difficulty - speedSlow)
+                word4.style.top = word4Height + "px"
+                word4Left += flightSpeed4
+                word4.style.left = word4Left + "px"
+                if(word4Left>flyRange4 + 100 || word4Left<flyRange4 - 100){
+                    flightSpeed4=-flightSpeed4
+                }
+            }
+            if(word4Height>880){
+                change4 = true 
+                fail()
+                triggerEffect4 = true
+                triggerEffect()
+            }
+        }
+
+        document.addEventListener("keydown", submit) 
+                                                             //attent pour l'evenement d'une touche
+        function submit(e){ 
+            if(e.key === "Enter"){  //si bouton entree peser
+                enterSound.play()
+                if(answer.textContent==word1.textContent){ //compare reponse ecrite et tout les mots puis active changement mot et succes pour tous les mots correctes
+                    word1Height=0
+                    sucess()
+                    triggerEffect1 = true
+                    triggerHelp1 = true
+                    change1 = true
+                    triggerEffect()
+                }
+                if(answer.textContent==word2.textContent){
+                    word2Height=0
+                    sucess()
+                    triggerEffect2 = true
+                    triggerHelp2 = true
+                    change2 = true
+                    triggerEffect()
+                }
+                if(answer.textContent==word3.textContent){
+                    word3Height=0
+                    sucess()
+                    triggerEffect3 = true
+                    triggerHelp3 = true
+                    change3 = true
+                    triggerEffect()
+                }
+                if(answer.textContent==word4.textContent){
+                    word4Height=0
+                    sucess()
+                    triggerEffect4 = true
+                    triggerHelp4 = true
+                    change4 = true
+                    triggerEffect()
+                }
+                answer.textContent ="" //efface reponse
+            }
+        }
+        document.addEventListener("keydown", type)
+ 
+        function type(e){ //chatgpt 
+            if(e.key === "a" || e.key === "A"){  //si bouton peser ajoute texte a answer
+                answer.textContent += "a"
+            }
+            if(e.key === "b" || e.key === "B"){ 
+                answer.textContent += "b"
+            }
+            if(e.key === "c" || e.key === "C"){ 
+                answer.textContent += "c"
+            }
+            if(e.key === "d" || e.key === "D"){ 
+                answer.textContent += "d"
+            }
+            if(e.key === "e" || e.key === "E"){ 
+                answer.textContent += "e"
+            }
+            if(e.key === "f" || e.key === "F"){ 
+                answer.textContent += "f"
+            }
+            if(e.key === "g" || e.key === "G"){ 
+                answer.textContent += "g"
+            }
+            if(e.key === "h" || e.key === "H"){ 
+                answer.textContent += "h"
+            }
+            if(e.key === "i" || e.key === "I"){ 
+                answer.textContent += "i"
+            }
+            if(e.key === "j" || e.key === "J"){ 
+                answer.textContent += "j"
+            }
+            if(e.key === "k" || e.key === "K"){ 
+                answer.textContent += "k"
+            }
+            if(e.key === "l" || e.key === "L"){ 
+                answer.textContent += "l"
+            }
+            if(e.key === "m" || e.key === "M"){ 
+                answer.textContent += "m"
+            }
+            if(e.key === "n" || e.key === "N"){ 
+                answer.textContent += "n"
+            }
+            if(e.key === "o" || e.key === "O"){ 
+                answer.textContent += "o"
+            }
+            if(e.key === "p" || e.key === "P"){ 
+                answer.textContent += "p"
+            }
+            if(e.key === "q" || e.key === "Q"){ 
+                answer.textContent += "q"
+            }
+            if(e.key === "r" || e.key === "R"){ 
+                answer.textContent += "r"
+            }
+            if(e.key === "s" || e.key === "S"){ 
+                answer.textContent += "s"
+            }
+            if(e.key === "t" || e.key === "T"){ 
+                answer.textContent += "t"
+            }
+            if(e.key === "u" || e.key === "U"){ 
+                answer.textContent += "u"
+            }
+            if(e.key === "v" || e.key === "V"){ 
+                answer.textContent += "v"
+            }
+            if(e.key === "w" || e.key === "W"){ 
+                answer.textContent += "w"
+            }
+            if(e.key === "x" || e.key === "X"){ 
+                answer.textContent += "x"
+            }
+            if(e.key === "y" || e.key === "Y"){ 
+                answer.textContent += "y"
+            }
+            if(e.key === "z" || e.key === "Z"){ 
+                answer.textContent += "z"
+            }
+            if(e.key === "Backspace" || e.key == "Delete"){ //si effacer enleve dernier caractere
+                answer.textContent = answer.textContent.slice(0, -1); //chatgpt
+            }
+        }
+        function fail(){ //quand rate enleve 1 vie
+            failSound.play()
+            lives-= 1
+            livesCount.textContent = "Vies : " + lives
+            if(lives <= 0){ //si plus de vie being tu perd
+                gameoverSound.play() //arrete les interval et cache tout puis montre gameover scene
+                clearInterval(activeGame)
+                clearInterval(activeGlobal)
+                clearInterval(activeTimer)
+                word1.classList.add("hide") 
+                word2.classList.add("hide") 
+                word3.classList.add("hide") 
+                word4.classList.add("hide")
+                gameoverMessage.classList.remove("hide")
+                document.body.style.backgroundImage = "url(Img-Dark_Creepy_Forest.jpg)"
+            }
+        }
+        function sucess(){ //quand reussit gagne un point
+            succesSound.play()
+            score+= 1
+            scoreCount.textContent = "Points: " + score
+            if(score == 5 || score == 10 || score == 15 || score == 20){ //selon ses scores augmente difficulte
+                difficulty++
+                if(difficulty == 1){ //selon difficulte ajoute une boite de mot
+                    word2.classList.remove("hide") 
+                    change2 = true
+                    wordChange()
+                }
+                if(difficulty == 2){
+                    word3.classList.remove("hide") 
+                    change3 = true
+                    wordChange()
+                }
+                if(difficulty == 3){ //c'est très a 4 mots bonne chance :D
+                    word4.classList.remove("hide") 
+                    change4 = true
+                    wordChange()
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
